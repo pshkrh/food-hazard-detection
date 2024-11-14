@@ -3,3 +3,8 @@ transformers
 datasets
 pandas
 scikit-learn
+numpy
+nltk
+beautifulsoup4
+imbalanced-learn
+tqdm
