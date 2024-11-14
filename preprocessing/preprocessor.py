@@ -9,13 +9,11 @@ import json
 from sklearn.feature_extraction.text import TfidfVectorizer
 from imblearn.combine import SMOTEENN
 from imblearn.over_sampling import SMOTE
-
-
-nltk.download('wordnet')
-nltk.download('stopwords')
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
+nltk.download('wordnet')
+nltk.download('stopwords')
 
 class DataPreprocessor:
     def __init__(self, file_path, mappings_file):
@@ -209,9 +207,10 @@ class DataPreprocessor:
         self.data.to_csv('../data/final_preprocessed_data.csv', index=False)
         print("✔ Final preprocessed data saved to 'final_preprocessed_data.csv'.")
 
-# Example usage
-file_path = '../data/incidents_train.csv'
-mappings_file = 'label_mappings.json'
-preprocessor = DataPreprocessor(file_path, mappings_file)
-preprocessed_data = preprocessor.preprocess()
-preprocessor.save_preprocessed_data()
+
+if __name__ == '__main__':
+    file_path = '../data/incidents_train.csv'
+    mappings_file = 'label_mappings.json'
+    preprocessor = DataPreprocessor(file_path, mappings_file)
+    preprocessed_data = preprocessor.preprocess()
+    preprocessor.save_preprocessed_data()
