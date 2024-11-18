@@ -9,11 +9,13 @@ import json
 from sklearn.feature_extraction.text import TfidfVectorizer
 from imblearn.combine import SMOTEENN
 from imblearn.over_sampling import SMOTE
-from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
+
 
 nltk.download('wordnet')
 nltk.download('stopwords')
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+
 
 class DataPreprocessor:
     def __init__(self, file_path, mappings_file):
@@ -116,7 +118,7 @@ class DataPreprocessor:
         features_scaled = scaler.fit_transform(features)
 
         # Apply PCA to reduce the dimensionality (optional, can be skipped if not needed)
-        pca = PCA(n_components=200)
+        pca = PCA(n_components=100)
         features_pca = pca.fit_transform(features_scaled)
 
         # Initialize SMOTEENN with k_neighbors=2
@@ -149,44 +151,35 @@ class DataPreprocessor:
 
             return X_final, y_final
 
-        # Balancing each label
-        y_product_category = self.data['product-category']
+        # Balancing each label and converting to integer indices
+        y_product_category = self.data['product-category'].map(
+            self.product_category_indices)
         X_balanced, y_balanced_product_category = balance_label(features_pca,
                                                                 y_product_category)
 
-        y_hazard_category = self.data['hazard-category']
+        y_hazard_category = self.data['hazard-category'].map(
+            self.hazard_category_indices)
         _, y_balanced_hazard_category = balance_label(features_pca,
                                                       y_hazard_category)
 
-        y_product = self.data['product']
+        y_product = self.data['product'].map(self.product_indices)
         _, y_balanced_product = balance_label(features_pca, y_product)
 
-        y_hazard = self.data['hazard']
+        y_hazard = self.data['hazard'].map(self.hazard_indices)
         _, y_balanced_hazard = balance_label(features_pca, y_hazard)
 
         # Combine the PCA features into a DataFrame
         balanced_data = pd.DataFrame(X_balanced,
-                                     columns=[f'PC{i + 1}' for i in range(200)])
+                                     columns=[f'PC{i + 1}' for i in range(100)])
 
         # Add the original/preprocessed columns and label categories back to the DataFrame
-        balanced_data['text'] = self.data['text']
-        balanced_data['title'] = self.data['title']
-        balanced_data['date'] = self.data['date']
-
-        # Add the 'country' column from the original data
-        balanced_data['country'] = self.data['country']
-
-        # Replace the numerical country index with the actual country name
-        balanced_data['country'] = balanced_data['country'].map(
-            self.country_mapping)
-
         balanced_data['product-category'] = y_balanced_product_category
         balanced_data['hazard-category'] = y_balanced_hazard_category
         balanced_data['product'] = y_balanced_product
         balanced_data['hazard'] = y_balanced_hazard
 
         self.data = balanced_data
-        print("✔ Balanced data with original columns and labels added back.")
+        print("✔ Balanced data with labels as integer indices.")
 
     def preprocess(self):
         self.drop_index_column()
