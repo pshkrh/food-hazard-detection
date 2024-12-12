@@ -1,6 +1,8 @@
 import os
 
 from matplotlib import pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
 
 from train_utils import sanitize_task_name
 
