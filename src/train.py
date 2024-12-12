@@ -636,35 +636,6 @@ def main(
     torch.cuda.empty_cache()
 
 
-if __name__ == "__main__":
-    models = [
-        "tuned_bert",
-        "facebook/bart-base",
-        "bert-base-uncased",
-        "roberta-base",
-        "microsoft/deberta-base",
-        "tfidf_logistic_regression",
-        "xgboost",
-    ]
-    subtasks = [1, 2]
-
-    for model in models:
-        for subtask in subtasks:
-            main(
-                model_name=model,
-                subtask=subtask,
-                epochs_num=2,
-                batch_size=32,
-                lr_val=2e-5,
-                max_len=64,
-                grad_acc_steps=1,
-                use_stratify=True,
-                syn_data_suffix="25",
-                freeze_until_layers=0,
-                is_multi_task=False,
-            )
-
-
 def parse_args():
     parser = argparse.ArgumentParser(description="Train NLP model")
 
