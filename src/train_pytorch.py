@@ -8,8 +8,8 @@ from torch import nn
 from torch.optim import AdamW
 from tqdm import tqdm
 
-from src.plotting_utils import plot_training_curves
-from src.train_utils import TrainingMetrics, EarlyStopping
+from plotting_utils import plot_training_curves
+from train_utils import TrainingMetrics, EarlyStopping
 
 
 def train_pytorch_model(

@@ -8,8 +8,8 @@ from torch import nn
 from tqdm import tqdm
 from transformers import get_linear_schedule_with_warmup
 
-from src.plotting_utils import plot_training_curves
-from src.train_utils import TrainingMetrics, EarlyStopping
+from plotting_utils import plot_training_curves
+from train_utils import TrainingMetrics, EarlyStopping
 
 
 def train_huggingface_model(

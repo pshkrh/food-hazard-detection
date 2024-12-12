@@ -2,7 +2,7 @@ import os
 
 from matplotlib import pyplot as plt
 
-from src.train_utils import sanitize_task_name
+from train_utils import sanitize_task_name
 
 
 def plot_training_curves(metrics, task_name, output_dir):
@@ -13,7 +13,7 @@ def plot_training_curves(metrics, task_name, output_dir):
     The plots are saved as PNG files in the specified output directory.
 
     Parameters:
-        metrics (src.train_utils.TrainingMetrics): The instance containing recorded training metrics.
+        metrics (train_utils.TrainingMetrics): The instance containing recorded training metrics.
         task_name (str): The name of the task for labeling the plots.
         output_dir (str): The directory where the plots will be saved.
     """

@@ -5,8 +5,8 @@ from datetime import datetime
 
 from sklearn.metrics import f1_score, log_loss
 
-from src.plotting_utils import plot_training_curves
-from src.train_utils import TrainingMetrics
+from plotting_utils import plot_training_curves
+from train_utils import TrainingMetrics
 
 
 def train_sklearn_model(
