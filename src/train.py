@@ -672,7 +672,7 @@ def parse_args():
     parser.add_argument(
         "--max_len",
         type=int,
-        default=32,
+        default=100,
         help="Maximum sequence length for tokenization."
     )
     parser.add_argument(
