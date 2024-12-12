@@ -48,8 +48,6 @@ def main(
     grad_acc_steps=1,
     use_stratify=True,
     syn_data_suffix="25",
-    freeze_until_layers=0,
-    is_multi_task=False,
 ):
     """
     The main function orchestrates the training process for various models and subtasks.
@@ -67,8 +65,6 @@ def main(
         grad_acc_steps (int, optional): Number of gradient accumulation steps. Defaults to 1.
         use_stratify (bool, optional): Whether to use stratified splitting. Defaults to True.
         syn_data_suffix (str, optional): Suffix for synthetic data filenames. Defaults to '25'.
-        freeze_until_layers (int, optional): Number of layers to freeze in the model. Defaults to 0.
-        is_multi_task (bool, optional): Whether to perform multi-task learning. Defaults to False.
     """
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     logging.info(f"Using device: {device}")
@@ -692,17 +688,6 @@ def parse_args():
         default="25",
         help="Suffix for synthetic data filenames."
     )
-    parser.add_argument(
-        "--freeze_until_layers",
-        type=int,
-        default=0,
-        help="Number of layers to freeze in the model."
-    )
-    parser.add_argument(
-        "--is_multi_task",
-        action="store_true",
-        help="If set, perform multi-task learning."
-    )
 
     return parser.parse_args()
 
@@ -719,6 +704,4 @@ if __name__ == "__main__":
         grad_acc_steps=args.grad_acc_steps,
         use_stratify=args.use_stratify,
         syn_data_suffix=args.syn_data_suffix,
-        freeze_until_layers=args.freeze_until_layers,
-        is_multi_task=args.is_multi_task,
     )
