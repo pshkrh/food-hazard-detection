@@ -17,12 +17,12 @@ from sklearn.ensemble import RandomForestClassifier
 import gc
 import argparse
 
-from src.data_utils import clean_title, build_vocab, collate_fn_simple
-from src.models import EnhancedClassifier, DNNClassifier, DANClassifier, CNNClassifier
-from src.train_hf import train_huggingface_model
-from src.train_pytorch import train_pytorch_model
-from src.train_sklearn import train_sklearn_model
-from src.train_utils import compute_class_weights, sanitize_task_name, \
+from data_utils import clean_title, build_vocab, collate_fn_simple
+from models import EnhancedClassifier, DNNClassifier, DANClassifier, CNNClassifier
+from train_hf import train_huggingface_model
+from train_pytorch import train_pytorch_model
+from train_sklearn import train_sklearn_model
+from train_utils import compute_class_weights, sanitize_task_name, \
     SingleLabelDataset, generate_predictions, text_to_ids, SimpleTextDataset
 
 nltk.download("wordnet")
@@ -89,8 +89,8 @@ def main(
     os.makedirs(submission_dir, exist_ok=True)
 
     if subtask == 1:
-        hazard_df = pd.read_csv(f"hazard_category_data_{syn_data_suffix}.csv")
-        product_df = pd.read_csv(f"product_category_data_{syn_data_suffix}.csv")
+        hazard_df = pd.read_csv(f"../data/hazard_category_data_{syn_data_suffix}.csv")
+        product_df = pd.read_csv(f"../data/product_category_data_{syn_data_suffix}.csv")
         hazard_col = (
             "hazard-category" if "hazard-category" in hazard_df.columns else "hazard"
         )
@@ -103,8 +103,8 @@ def main(
         hazard_task_name = "ST1 Hazard Category Classification"
         product_task_name = "ST1 Product Category Classification"
     else:
-        hazard_df = pd.read_csv(f"hazard_data_{syn_data_suffix}.csv")
-        product_df = pd.read_csv(f"product_data_{syn_data_suffix}.csv")
+        hazard_df = pd.read_csv(f"../data/hazard_data_{syn_data_suffix}.csv")
+        product_df = pd.read_csv(f"../data/product_data_{syn_data_suffix}.csv")
         hazard_col = "hazard"
         product_col = "product"
         output_prefix = "st2"
@@ -252,8 +252,8 @@ def main(
             os.path.join(models_dir, f"best_{output_prefix}_product_model.pt"),
         )
 
-        if os.path.exists("incidents_unlabeled_val.csv"):
-            val_df = pd.read_csv("incidents_unlabeled_val.csv")
+        if os.path.exists("../data/incidents_unlabeled_val.csv"):
+            val_df = pd.read_csv("../data/incidents_unlabeled_val.csv")
             val_df["cleaned_title"] = val_df["title"].apply(clean_title)
 
             val_dataset = SingleLabelDataset(
@@ -283,7 +283,7 @@ def main(
                 {hazard_col: hazard_preds_str, product_col: product_preds_str}
             )
 
-            submission_path = os.path.join(submission_dir, "submission.csv")
+            submission_path = os.path.join(submission_dir, "../data/submission.csv")
             submission_df.to_csv(submission_path, index=False)
             logging.info(f"\nSubmission file saved to {submission_path}")
             print(f"\nSubmission file saved to {submission_path}")
@@ -292,7 +292,7 @@ def main(
                 run_output_dir, f"submission-{model_safe}-{output_prefix}.zip"
             )
             with zipfile.ZipFile(zip_path, "w") as zipf:
-                zipf.write(submission_path, arcname="submission.csv")
+                zipf.write(submission_path, arcname="../data/submission.csv")
 
     elif model_name == "tfidf_logistic_regression":
         hazard_tfidf = TfidfVectorizer(max_features=20000, stop_words="english")
@@ -339,8 +339,8 @@ def main(
             epochs_num=1,
         )
 
-        if os.path.exists("incidents_unlabeled_val.csv"):
-            val_df = pd.read_csv("incidents_unlabeled_val.csv")
+        if os.path.exists("../data/incidents_unlabeled_val.csv"):
+            val_df = pd.read_csv("../data/incidents_unlabeled_val.csv")
             val_df["clean_title"] = val_df["title"].apply(clean_title)
 
             X_unlabeled_hazard = hazard_tfidf.transform(val_df["clean_title"].values)
@@ -356,14 +356,14 @@ def main(
                 {hazard_col: hazard_preds_str, product_col: product_preds_str}
             )
 
-            submission_path = os.path.join(submission_dir, "submission.csv")
+            submission_path = os.path.join(submission_dir, "../data/submission.csv")
             submission_df.to_csv(submission_path, index=False)
 
             zip_path = os.path.join(
                 run_output_dir, f"submission-{model_safe}-{output_prefix}.zip"
             )
             with zipfile.ZipFile(zip_path, "w") as zipf:
-                zipf.write(submission_path, arcname="submission.csv")
+                zipf.write(submission_path, arcname="../data/submission.csv")
 
     elif model_name == "xgboost":
         hazard_tfidf = TfidfVectorizer(max_features=20000, stop_words="english")
@@ -410,8 +410,8 @@ def main(
             epochs_num=1,
         )
 
-        if os.path.exists("incidents_unlabeled_val.csv"):
-            val_df = pd.read_csv("incidents_unlabeled_val.csv")
+        if os.path.exists("../data/incidents_unlabeled_val.csv"):
+            val_df = pd.read_csv("../data/incidents_unlabeled_val.csv")
             val_df["clean_title"] = val_df["title"].apply(clean_title)
 
             X_unlabeled_hazard = hazard_tfidf.transform(val_df["clean_title"].values)
@@ -427,14 +427,14 @@ def main(
                 {hazard_col: hazard_preds_str, product_col: product_preds_str}
             )
 
-            submission_path = os.path.join(submission_dir, "submission.csv")
+            submission_path = os.path.join(submission_dir, "../data/submission.csv")
             submission_df.to_csv(submission_path, index=False)
 
             zip_path = os.path.join(
                 run_output_dir, f"submission-{model_safe}-{output_prefix}.zip"
             )
             with zipfile.ZipFile(zip_path, "w") as zipf:
-                zipf.write(submission_path, arcname="submission.csv")
+                zipf.write(submission_path, arcname="../data/submission.csv")
 
     elif model_name == "random_forest":
         hazard_tfidf = TfidfVectorizer(max_features=20000, stop_words="english")
@@ -481,8 +481,8 @@ def main(
             epochs_num=1,
         )
 
-        if os.path.exists("incidents_unlabeled_val.csv"):
-            val_df = pd.read_csv("incidents_unlabeled_val.csv")
+        if os.path.exists("../data/incidents_unlabeled_val.csv"):
+            val_df = pd.read_csv("../data/incidents_unlabeled_val.csv")
             val_df["clean_title"] = val_df["title"].apply(clean_title)
 
             X_unlabeled_hazard = hazard_tfidf.transform(val_df["clean_title"].values)
@@ -498,14 +498,14 @@ def main(
                 {hazard_col: hazard_preds_str, product_col: product_preds_str}
             )
 
-            submission_path = os.path.join(submission_dir, "submission.csv")
+            submission_path = os.path.join(submission_dir, "../data/submission.csv")
             submission_df.to_csv(submission_path, index=False)
 
             zip_path = os.path.join(
                 run_output_dir, f"submission-{model_safe}-{output_prefix}.zip"
             )
             with zipfile.ZipFile(zip_path, "w") as zipf:
-                zipf.write(submission_path, arcname="submission.csv")
+                zipf.write(submission_path, arcname="../data/submission.csv")
 
     elif model_name in ["dnn", "dan", "cnn"]:
         hazard_train_texts = hazard_train["title"].apply(clean_title).values
@@ -583,8 +583,8 @@ def main(
             out_dir=run_output_dir,
         )
 
-        if os.path.exists("incidents_unlabeled_val.csv"):
-            val_df = pd.read_csv("incidents_unlabeled_val.csv")
+        if os.path.exists("../data/incidents_unlabeled_val.csv"):
+            val_df = pd.read_csv("../data/incidents_unlabeled_val.csv")
             val_df["clean_title"] = val_df["title"].apply(clean_title)
 
             X_unlabeled_h = [
@@ -623,14 +623,14 @@ def main(
                 {hazard_col: hazard_preds_str, product_col: product_preds_str}
             )
 
-            submission_path = os.path.join(submission_dir, "submission.csv")
+            submission_path = os.path.join(submission_dir, "../data/submission.csv")
             submission_df.to_csv(submission_path, index=False)
 
             zip_path = os.path.join(
                 run_output_dir, f"submission-{model_safe}-{output_prefix}.zip"
             )
             with zipfile.ZipFile(zip_path, "w") as zipf:
-                zipf.write(submission_path, arcname="submission.csv")
+                zipf.write(submission_path, arcname="../data/submission.csv")
 
     gc.collect()
     torch.cuda.empty_cache()
