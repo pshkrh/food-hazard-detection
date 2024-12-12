@@ -1,10 +1,15 @@
-torch
-transformers
-datasets
-pandas
-scikit-learn
-numpy
-nltk
-beautifulsoup4
-imbalanced-learn
-tqdm
+beautifulsoup4==4.12.3
+imbalanced-learn==0.12.3
+matplotlib==3.7.1
+nltk==3.8.1
+numpy==1.26.4
+pandas==2.1.4
+scikit_learn==1.0.2
+seaborn==0.13.1
+torch @ https://download.pytorch.org/whl/cu121_full/torch-2.4.1%2Bcu121-cp310-cp310-linux_x86_64.whl#sha256=f3ed9a2b7f8671b2b32a2f036d1b81055eb3ad9b18ba43b705aa34bae4289e1a
+torchaudio @ https://download.pytorch.org/whl/cu121_full/torchaudio-2.4.1%2Bcu121-cp310-cp310-linux_x86_64.whl#sha256=da8c87c80a1c1376a48dc33eef30b03bbdf1df25a05bd2b1c620b8811c7b19be
+torchsummary==1.5.1
+torchvision @ https://download.pytorch.org/whl/cu121_full/torchvision-0.19.1%2Bcu121-cp310-cp310-linux_x86_64.whl#sha256=b8cc4bf381b75522995b601e07a1b433b5fd925dc3e34a7fa6cd22f449d65379
+tqdm==4.66.5
+transformers==4.31.0
+xgboost==2.1.1
