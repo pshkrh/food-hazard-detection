@@ -72,7 +72,7 @@ def main(
 
     model_safe = sanitize_task_name(model_name)
     subtask_safe = f"st{subtask}"
-    run_output_dir = f"training-result-{model_safe}/{subtask_safe}"
+    run_output_dir = f"../outputs/training-result-{model_safe}/{subtask_safe}"
     os.makedirs(run_output_dir, exist_ok=True)
 
     plots_dir = os.path.join(run_output_dir, "plots")
@@ -279,7 +279,7 @@ def main(
                 {hazard_col: hazard_preds_str, product_col: product_preds_str}
             )
 
-            submission_path = os.path.join(submission_dir, "../data/submission.csv")
+            submission_path = os.path.join(submission_dir, "submission.csv")
             submission_df.to_csv(submission_path, index=False)
             logging.info(f"\nSubmission file saved to {submission_path}")
             print(f"\nSubmission file saved to {submission_path}")
@@ -288,7 +288,7 @@ def main(
                 run_output_dir, f"submission-{model_safe}-{output_prefix}.zip"
             )
             with zipfile.ZipFile(zip_path, "w") as zipf:
-                zipf.write(submission_path, arcname="../data/submission.csv")
+                zipf.write(submission_path, arcname="submission.csv")
 
     elif model_name == "tfidf_logistic_regression":
         hazard_tfidf = TfidfVectorizer(max_features=20000, stop_words="english")
@@ -352,14 +352,14 @@ def main(
                 {hazard_col: hazard_preds_str, product_col: product_preds_str}
             )
 
-            submission_path = os.path.join(submission_dir, "../data/submission.csv")
+            submission_path = os.path.join(submission_dir, "submission.csv")
             submission_df.to_csv(submission_path, index=False)
 
             zip_path = os.path.join(
                 run_output_dir, f"submission-{model_safe}-{output_prefix}.zip"
             )
             with zipfile.ZipFile(zip_path, "w") as zipf:
-                zipf.write(submission_path, arcname="../data/submission.csv")
+                zipf.write(submission_path, arcname="submission.csv")
 
     elif model_name == "xgboost":
         hazard_tfidf = TfidfVectorizer(max_features=20000, stop_words="english")
@@ -423,14 +423,14 @@ def main(
                 {hazard_col: hazard_preds_str, product_col: product_preds_str}
             )
 
-            submission_path = os.path.join(submission_dir, "../data/submission.csv")
+            submission_path = os.path.join(submission_dir, "submission.csv")
             submission_df.to_csv(submission_path, index=False)
 
             zip_path = os.path.join(
                 run_output_dir, f"submission-{model_safe}-{output_prefix}.zip"
             )
             with zipfile.ZipFile(zip_path, "w") as zipf:
-                zipf.write(submission_path, arcname="../data/submission.csv")
+                zipf.write(submission_path, arcname="submission.csv")
 
     elif model_name == "random_forest":
         hazard_tfidf = TfidfVectorizer(max_features=20000, stop_words="english")
@@ -494,14 +494,14 @@ def main(
                 {hazard_col: hazard_preds_str, product_col: product_preds_str}
             )
 
-            submission_path = os.path.join(submission_dir, "../data/submission.csv")
+            submission_path = os.path.join(submission_dir, "submission.csv")
             submission_df.to_csv(submission_path, index=False)
 
             zip_path = os.path.join(
                 run_output_dir, f"submission-{model_safe}-{output_prefix}.zip"
             )
             with zipfile.ZipFile(zip_path, "w") as zipf:
-                zipf.write(submission_path, arcname="../data/submission.csv")
+                zipf.write(submission_path, arcname="submission.csv")
 
     elif model_name in ["dnn", "dan", "cnn"]:
         hazard_train_texts = hazard_train["title"].apply(clean_title).values
@@ -619,14 +619,14 @@ def main(
                 {hazard_col: hazard_preds_str, product_col: product_preds_str}
             )
 
-            submission_path = os.path.join(submission_dir, "../data/submission.csv")
+            submission_path = os.path.join(submission_dir, "submission.csv")
             submission_df.to_csv(submission_path, index=False)
 
             zip_path = os.path.join(
                 run_output_dir, f"submission-{model_safe}-{output_prefix}.zip"
             )
             with zipfile.ZipFile(zip_path, "w") as zipf:
-                zipf.write(submission_path, arcname="../data/submission.csv")
+                zipf.write(submission_path, arcname="submission.csv")
 
     gc.collect()
     torch.cuda.empty_cache()
