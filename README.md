@@ -34,9 +34,24 @@ Ensure that the dataset is placed in the `data/` directory before running the tr
    ```
 
 3. **Install Dependencies**:
-   ```
-   pip install -r requirements.txt
-   ```
+
+    If you do not have a GPU:
+    ```
+    pip install -r requirements.txt
+    ```
+   
+    If you have a CUDA-enabled GPU:
+    ```
+    pip install -r requirements_gpu.txt
+    ```
+   
+    You might also need to install nltk data (though this has been handled in the train code at the beginning):
+    ```python
+    import nltk
+    nltk.download("wordnet")
+    nltk.download("omw-1.4")
+    nltk.download("stopwords")
+    ```
 
 ## How to Run the Synthetic Data Generation Pipeline
 
