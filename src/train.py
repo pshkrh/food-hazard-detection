@@ -1,4 +1,8 @@
 import nltk
+nltk.download("wordnet", quiet=True)
+nltk.download("omw-1.4", quiet=True)
+nltk.download("stopwords", quiet=True)
+
 import os
 import torch
 from transformers import AutoTokenizer
@@ -25,9 +29,6 @@ from train_sklearn import train_sklearn_model
 from train_utils import compute_class_weights, sanitize_task_name, \
     SingleLabelDataset, generate_predictions, text_to_ids, SimpleTextDataset
 
-nltk.download("wordnet")
-nltk.download("omw-1.4")
-nltk.download("stopwords", quiet=True)
 
 warnings.filterwarnings("ignore")
 
