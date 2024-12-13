@@ -57,11 +57,9 @@ Ensure that the dataset is placed in the `data/` directory before running the tr
 
 1. The notebook containing the synthetic data generation code is located in the `notebooks/` directory with the file name `data_synthesis_llama.ipynb`. This is best run on Colab with a GPU, or another similar GPU-based platform.
 
-2. The `load_in_8bit` parameter should be set to `False` if running for 25 or lower minimum samples per class. For anything greater, we recommend enabling this since we ran out of memory for the LLama 3.1 8B model on our NVIDIA L4 GPU with 24GB of VRAM running on GCP.
+2. The cells should be run sequentially. The data path by default is set to use a Google Cloud Storage bucket, but can be changed to a local file. These paths are needed for both loading the dataset and downloading the newly created ones.
 
-3. The cells should be run sequentially. The data path by default is set to use a Google Cloud Storage bucket, but can be changed to a local file.
-
-4. Running the code in the notebook will generate four CSV files: Hazard, Product each for both subtasks. This can then be used as input data for training the model. 
+3. Running the code in the notebook will generate four CSV files: Hazard, Product each for both subtasks. This can then be used as input data for training the model. 
 
 ## How to Run Training
 
