@@ -56,7 +56,9 @@ class EnhancedClassifier(nn.Module):
 class DNNClassifier(nn.Module):
   """
     A Deep Neural Network (DNN) classifier for text classification tasks.
-    """
+    This model consists of an embedding layer, a fully connected hidden layer with ReLU activation,
+    a dropout layer for regularization, and an output layer for classification.
+  """
 
   def __init__(self, vocab_sz, num_lbls, emb_dim=100, hid_dim=256,
       drop_val=0.3):
@@ -78,7 +80,9 @@ class DNNClassifier(nn.Module):
 class DANClassifier(nn.Module):
   """
     A Deep Averaging Network (DAN) classifier for text classification tasks.
-    """
+    This model averages word embeddings and passes them through fully connected layers with ReLU activation
+    and dropout for classification.
+  """
 
   def __init__(self, vocab_sz, num_lbls, emb_dim=100, hid_dim=256,
       drop_val=0.3):
@@ -100,7 +104,9 @@ class DANClassifier(nn.Module):
 class CNNClassifier(nn.Module):
   """
     A Convolutional Neural Network (CNN) classifier for text classification tasks.
-    """
+    This model uses multiple convolutional filters with varying kernel sizes to capture different n-gram features,
+    followed by max pooling, dropout, and a fully connected output layer for classification.
+  """
 
   def __init__(
       self,
