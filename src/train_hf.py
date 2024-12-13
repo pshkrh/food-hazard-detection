@@ -27,10 +27,8 @@ def train_huggingface_model(
 ):
     """
     Trains a PyTorch model using the provided training and validation data loaders.
-
     The function handles the training loop, including forward and backward passes, loss computation,
     gradient accumulation, optimizer steps, learning rate scheduling, and early stopping based on validation F1 score.
-
     Parameters:
         model (torch.nn.Module): The PyTorch model to be trained.
         train_loader (torch.utils.data.DataLoader): DataLoader for the training dataset.
@@ -43,7 +41,6 @@ def train_huggingface_model(
         patience (int, optional): Number of epochs to wait for improvement before early stopping. Defaults to 3.
         gradient_accumulation_steps (int, optional): Number of steps to accumulate gradients before performing an optimizer step. Defaults to 1.
         output_dir (str, optional): Directory where training outputs (metrics, plots) will be saved. Defaults to 'training_results'.
-
     Returns:
         torch.nn.Module: The trained model with the best validation F1 score.
     """
