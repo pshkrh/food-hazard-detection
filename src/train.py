@@ -1,8 +1,4 @@
 import nltk
-nltk.download("wordnet", quiet=True)
-nltk.download("omw-1.4", quiet=True)
-nltk.download("stopwords", quiet=True)
-
 import os
 import torch
 from transformers import AutoTokenizer
@@ -29,6 +25,9 @@ from train_sklearn import train_sklearn_model
 from train_utils import compute_class_weights, sanitize_task_name, \
     SingleLabelDataset, generate_predictions, text_to_ids, SimpleTextDataset
 
+nltk.download("wordnet", quiet=True)
+nltk.download("omw-1.4", quiet=True)
+nltk.download("stopwords", quiet=True)
 
 warnings.filterwarnings("ignore")
 
@@ -50,23 +49,6 @@ def main(
     use_stratify=True,
     syn_data_suffix="25",
 ):
-    """
-    The main function orchestrates the training process for various models and subtasks.
-
-    It handles data loading, preprocessing, model instantiation, training, evaluation, and submission file generation
-    based on the specified model and subtask.
-
-    Parameters:
-        model_name (str, optional): The name of the model to train. Defaults to 'bert-base-uncased'.
-        subtask (int, optional): The subtask identifier (1 or 2). Defaults to 1.
-        epochs_num (int, optional): Number of training epochs. Defaults to 20.
-        batch_size (int, optional): Batch size for training and evaluation. Defaults to 16.
-        lr_val (float, optional): Learning rate for the optimizer. Defaults to 2e-5.
-        max_len (int, optional): Maximum sequence length for tokenization. Defaults to 32.
-        grad_acc_steps (int, optional): Number of gradient accumulation steps. Defaults to 1.
-        use_stratify (bool, optional): Whether to use stratified splitting. Defaults to True.
-        syn_data_suffix (str, optional): Suffix for synthetic data filenames. Defaults to '25'.
-    """
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     logging.info(f"Using device: {device}")
     print(f"Using device: {device}")
@@ -651,7 +633,7 @@ def parse_args():
     parser.add_argument(
         "--epochs_num",
         type=int,
-        default=20,
+        default=1,
         help="Number of training epochs."
     )
     parser.add_argument(
